@@ -1,0 +1,150 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>jp.gr.java_conf.otk.aiwolf.compe2020</groupId>
+	<artifactId>otsuki</artifactId>
+	<version>5.4.0-publish0</version>
+	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<java.version>11</java.version>
+		<aiwolf.version>0.6.2</aiwolf.version>
+		<nd4j.version>1.0.0-beta7</nd4j.version>
+		<dl4j.version>1.0.0-beta7</dl4j.version>
+		<datavec.version>1.0.0-beta7</datavec.version>
+		<arbiter.version>1.0.0-beta7</arbiter.version>
+		<rl4j.version>1.0.0-beta7</rl4j.version>
+		<slf4j.version>1.7.30</slf4j.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.aiwolf</groupId>
+			<artifactId>aiwolf-common</artifactId>
+			<version>${aiwolf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-nop</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.deeplearning4j</groupId>
+			<artifactId>deeplearning4j-core</artifactId>
+			<version>${dl4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.nd4j</groupId>
+			<artifactId>nd4j-native-platform</artifactId>
+			<version>${nd4j.version}</version>
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.nd4j</groupId> -->
+		<!-- <artifactId>nd4j-native</artifactId> -->
+		<!-- <version>${nd4j.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.nd4j</groupId> -->
+		<!-- <artifactId>nd4j-native</artifactId> -->
+		<!-- <version>${nd4j.version}</version> -->
+		<!-- <classifier>linux-x86_64-avx2</classifier> -->
+		<!-- </dependency> -->
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.3</version>
+				<configuration>
+					<!-- put your configurations here -->
+					<artifactSet>
+						<excludes>
+							<exclude>org.aiwolf:*:*</exclude>
+							<exclude>*:*:*:android*</exclude>
+							<exclude>*:*:*:windows*</exclude>
+							<exclude>*:*:*:macos*</exclude>
+							<exclude>*:*:*:ios*</exclude>
+							<exclude>*:*:*:linux-arm*</exclude>
+							<exclude>*:*:*:linux-ppc*</exclude>
+							<exclude>*:*:*:linux-x86</exclude>
+							<exclude>com.twelvemonkeys.*</exclude>
+							<exclude>org.threeten</exclude>
+							<exclude>org.openjfx</exclude>
+							<exclude>com.google.code.gson</exclude>
+							<exclude>org.bytedeco:javacv</exclude>
+							<exclude>org.bytedeco:opencv*</exclude>
+							<exclude>org.bytedeco:ffmpeg</exclude>
+							<exclude>org.bytedeco:flycapture</exclude>
+							<exclude>org.bytedeco:libdc1394</exclude>
+							<exclude>org.bytedeco:libfreenect*</exclude>
+							<exclude>org.bytedeco:librealsense*</exclude>
+							<exclude>org.bytedeco:videoinput</exclude>
+							<exclude>org.bytedeco:artoolkitplus</exclude>
+							<exclude>org.bytedeco:flandmark</exclude>
+							<exclude>org.bytedeco:leptonica*</exclude>
+							<exclude>org.bytedeco:tesseract</exclude>
+							<exclude>org.bytedeco:mkl</exclude>
+							<exclude>net.sf.opencsv</exclude>
+							<exclude>org.datavec:datavec-data-image</exclude>
+							<exclude>org.lucee</exclude>
+							<exclude>com.github.oshi:oshi-core</exclude>
+							<exclude>commons-codec</exclude>
+							<exclude>joda-time</exclude>
+							<exclude>org.freemarker</exclude>
+							<exclude>com.tdunning</exclude>
+							<excllude>com.github.jai-imageio</excllude>
+							<exclude>it.unimi.dsi</exclude>
+							<exclude>com.clearspring.analytics</exclude>
+							<exclude>org.deeplearning4j:nearestneighbor-core</exclude>
+							<exclude>org.deeplearning4j:deeplearning4j-ui-components</exclude>
+							<exclude>org.deeplearning4j:deeplearning4j-datavec-iterators</exclude>
+							<exclude>org.deeplearning4j:deeplearning4j-datasets</exclude>
+							<exclude>org.deeplearning4j:deeplearning4j-tsne</exclude>
+							<exclude>org.deeplearning4j:deeplearning4j-utility-iterators</exclude>
+							<exclude>org.deeplearning4j:deeplearning4j-util</exclude>
+							<!-- <exclude>org.deeplearning4j:deeplearning4j-modelimport</exclude> -->
+							<exclude>com.jakewharton.byteunits</exclude>
+							<exclude>net.ericaro</exclude>
+							<exclude>com.google.flatbuffers</exclude>
+							<exclude>org.nd4j:protobuf</exclude>
+							<exclude>commons-net</exclude>
+							<exclude>net.java.dev.jna</exclude>
+							<exclude>org.apache.commons:commons-compress</exclude>
+							<exclude>org.deeplearning4j:deeplearning4j-core</exclude>
+							<exclude>org.bytedeco:hdf5-platform</exclude>
+							<!-- <exclude>org.bytedeco:hdf5</exclude> -->
+							<exclude>org.nd4j:nd4j-jackson</exclude>
+							<exclude>org.datavec:datavec-api</exclude>
+							<!-- <exclude>org.bytedeco:openblas-platform</exclude> -->
+							<!-- <exclude>org.deeplearning4j:deeplearning4j-common</exclude> -->
+							<!-- <exclude>org.slf4j:slf4j-api</exclude> -->
+							<!-- <exclude>org.deeplearning4j:deeplearning4j-nn</exclude> -->
+							<!-- <exclude>org.nd4j:nd4j-common</exclude> -->
+							<!-- <exclude>org.nd4j:guava</exclude> -->
+							<!-- <exclude>org.apache.commons:commons-math3</exclude> -->
+							<!-- <exclude>commons-io:commons-io</exclude> -->
+							<!-- <exclude>org.nd4j:nd4j-api</exclude> -->
+							<!-- <exclude>org.nd4j:nd4j-buffer</exclude> -->
+							<!-- <exclude>org.nd4j:nd4j-context</exclude> -->
+							<!-- <exclude>org.apache.commons:commons-lang3</exclude> -->
+							<!-- <exclude>org.nd4j:jackson</exclude> -->
+							<!-- <exclude>org.nd4j:nd4j-native</exclude> -->
+							<!-- <exclude>org.bytedeco:javacpp</exclude> -->
+							<!-- <exclude>org.bytedeco:openblas</exclude> -->
+							<!-- <exclude>org.nd4j:nd4j-native-api</exclude> -->
+						</excludes>
+					</artifactSet>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
