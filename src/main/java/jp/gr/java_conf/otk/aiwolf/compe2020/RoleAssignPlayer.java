@@ -1,6 +1,8 @@
 /**
  * RoleAssignPlayer.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -13,6 +15,7 @@ import org.aiwolf.common.net.GameSetting;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
+ * Player which assigns player class according to its role.
  * 
  * @author otsuki
  */
@@ -44,6 +47,11 @@ public class RoleAssignPlayer implements Player {
 	private Role myRole;
 	private int werewolf5Mode;
 
+	/**
+	 * Constructs RoleAssignPlayer with meta information.
+	 * 
+	 * @param metaInfo meta information
+	 */
 	public RoleAssignPlayer(MetaInfo metaInfo) {
 		this.metaInfo = metaInfo;
 		fakeMetaInfo = new MetaInfo();

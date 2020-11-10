@@ -1,6 +1,8 @@
 /**
  * Villager5.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -10,12 +12,17 @@ import org.aiwolf.common.data.Role;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * villager for 5 agent village
+ * Villager for 5 agent village
  * 
  * @author otsuki
  */
 public class Villager5 extends BasePlayer5 {
 
+	/**
+	 * Constructs Villager5 with meta information.
+	 * 
+	 * @param metaInfo meta information
+	 */
 	public Villager5(MetaInfo metaInfo) {
 		super(metaInfo);
 	}

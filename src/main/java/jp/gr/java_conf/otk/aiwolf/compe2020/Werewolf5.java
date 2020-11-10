@@ -1,6 +1,8 @@
 /**
  * Werewolf5.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -12,7 +14,7 @@ import org.aiwolf.common.net.GameSetting;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * werewolf for 5 agent village
+ * Werewolf for 5 agent village
  * 
  * @author otsuki
  */
@@ -21,6 +23,12 @@ public class Werewolf5 extends BasePlayer5 {
 	private BasePlayer5 innerVillager;
 	protected MetaInfo fakeMetaInfo;
 
+	/**
+	 * Constructs Werewolf5 with meta information.
+	 * 
+	 * @param metaInfo     meta information for werewolf
+	 * @param fakeMetaInfo meta information for fake role
+	 */
 	public Werewolf5(MetaInfo metaInfo, MetaInfo fakeMetaInfo) {
 		super(metaInfo);
 		this.fakeMetaInfo = fakeMetaInfo;

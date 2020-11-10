@@ -1,6 +1,8 @@
 /**
  * AttackVoteReasonMap.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -10,7 +12,7 @@ import org.aiwolf.client.lib.Topic;
 import org.aiwolf.common.data.Agent;
 
 /**
- * attack voting destination and voting reason declared by each player
+ * A mapping between agent and its declared attack vote with reason.
  * 
  * @author otsuki
  */

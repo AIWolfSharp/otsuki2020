@@ -1,6 +1,8 @@
 /**
  * VoteRequestCounter.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -16,12 +18,12 @@ import org.aiwolf.client.lib.Topic;
 import org.aiwolf.common.data.Agent;
 
 /**
- * vote request counter
+ * Counts requests for vote.
  * 
  * @author otsuki
  */
 @SuppressWarnings("serial")
-class VoteRequestCounter extends ArrayList<Content> {
+public class VoteRequestCounter extends ArrayList<Content> {
 
 	private Map<Agent, Agent> agentRequestMap = new HashMap<>();
 
@@ -61,19 +63,40 @@ class VoteRequestCounter extends ArrayList<Content> {
 		return false;
 	}
 
-	Map<Agent, Agent> getRequestMap() {
+	/**
+	 * Returns the map between the requesting agent and the requested agent.
+	 * 
+	 * @return the map between a agent and the other agent
+	 */
+	public Map<Agent, Agent> getRequestMap() {
 		return agentRequestMap;
 	}
 
-	int getCount(Agent agent) {
+	/**
+	 * Returns the number of votes for the agent.
+	 * 
+	 * @param the agent
+	 * @return the number of votes for the agent
+	 */
+	public int getCount(Agent agent) {
 		return agentCountMap.containsKey(agent) ? agentCountMap.get(agent) : 0;
 	}
 
-	List<Agent> getOrderedAgentList() {
+	/**
+	 * Returns the list of agents sorted by the number of votes in descending order.
+	 * 
+	 * @return the sorted list of agents
+	 */
+	public List<Agent> getOrderedAgentList() {
 		return orderedAgentList;
 	}
 
-	List<Agent> getTopAgentList() {
+	/**
+	 * Returns the list of agents that get the maximum number of votes.
+	 * 
+	 * @return the list of agents having the maximum number of votes
+	 */
+	public List<Agent> getTopAgentList() {
 		if (orderedAgentList != null && !orderedAgentList.isEmpty()) {
 			int max = getCount(orderedAgentList.get(0));
 			return orderedAgentList.stream().filter(a -> getCount(a) == max).collect(Collectors.toList());
@@ -82,7 +105,9 @@ class VoteRequestCounter extends ArrayList<Content> {
 	}
 
 	/**
-	 * returns true if there is modification since last call of this method
+	 * Returns whether or not there is modification since last call of this method.
+	 * 
+	 * @return true if there is modification
 	 */
 	public boolean isChanged() {
 		return isChanged && !(isChanged = false);

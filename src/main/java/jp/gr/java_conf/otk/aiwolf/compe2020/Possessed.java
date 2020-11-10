@@ -1,6 +1,8 @@
 /**
  * Possessed.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -19,7 +21,7 @@ import jp.gr.java_conf.otk.aiwolf.compe2020.common.GameInfoModifier;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * possessed
+ * Possessed
  * 
  * @author otsuki
  */
@@ -30,6 +32,12 @@ public class Possessed extends BasePlayer {
 	private MetaInfo fakeMetaInfo;
 	private List<Agent> divinedList = new ArrayList<>();
 
+	/**
+	 * Constructs Possessed with meta information.
+	 * 
+	 * @param metaInfo     meta information for possessed
+	 * @param fakeMetaInfo meta information for fake role
+	 */
 	public Possessed(MetaInfo metaInfo, MetaInfo fakeMetaInfo) {
 		super(metaInfo);
 		this.fakeMetaInfo = fakeMetaInfo;

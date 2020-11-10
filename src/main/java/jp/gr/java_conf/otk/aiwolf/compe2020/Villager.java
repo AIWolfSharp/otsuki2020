@@ -1,6 +1,8 @@
 /**
  * Villager.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -12,12 +14,17 @@ import org.aiwolf.common.data.Role;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * villager
+ * Villager
  * 
  * @author otsuki
  */
 public class Villager extends BasePlayer {
 
+	/**
+	 * Constructs Villager with meta information.
+	 * 
+	 * @param metaInfo meta information
+	 */
 	public Villager(MetaInfo metaInfo) {
 		super(metaInfo);
 	}
@@ -27,9 +34,6 @@ public class Villager extends BasePlayer {
 		super.dayStart();
 	}
 
-	/**
-	 * 
-	 */
 	protected void chooseVoteCandidate0() {
 		voteCandidate = getAliveOthers().stream().max(comparing(a -> voteEval1(a))).orElse(null);
 		getVoteReasonMap().put(getMe(), voteCandidate);

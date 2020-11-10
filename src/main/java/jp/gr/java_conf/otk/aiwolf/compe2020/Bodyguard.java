@@ -1,6 +1,8 @@
 /**
  * Bodyguard.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -12,12 +14,17 @@ import org.aiwolf.common.data.Role;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * bodyguadd
+ * Bodyguard
  * 
  * @author otsuki
  */
 public class Bodyguard extends Villager {
 
+	/**
+	 * Constructs Bodyguard with meta information.
+	 * 
+	 * @param metaInfo meta information
+	 */
 	public Bodyguard(MetaInfo metaInfo) {
 		super(metaInfo);
 	}

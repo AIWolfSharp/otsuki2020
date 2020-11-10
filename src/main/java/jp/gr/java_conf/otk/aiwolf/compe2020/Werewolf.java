@@ -1,6 +1,8 @@
 /**
  * Werewolf.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -30,7 +32,7 @@ import jp.gr.java_conf.otk.aiwolf.compe2020.common.GameInfoModifier;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * werewolf
+ * Werewolf
  * 
  * @author otsuki
  */
@@ -54,6 +56,7 @@ public class Werewolf extends BasePlayer {
 	private MetaInfo fakeMetaInfo;
 
 	/**
+	 * Constructs Werewolf with meta information.
 	 * 
 	 * @param metaInfo     meta information for werewolf
 	 * @param fakeMetaInfo meta information for fake role

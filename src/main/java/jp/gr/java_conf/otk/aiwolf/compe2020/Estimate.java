@@ -1,6 +1,8 @@
 /**
  * Estimate.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -19,18 +21,20 @@ import org.aiwolf.common.data.Agent;
 import org.aiwolf.common.data.Role;
 
 /**
+ * Class representing a role estimate and its reason.
+ * 
  * @author otsuki
  *
  */
-class Estimate {
+public class Estimate {
 
 	/**
-	 * return null if no estimate sentence is found
+	 * Parses a sentence and returns estimates included in the sentence.
 	 * 
-	 * @param content
-	 * @return
+	 * @param content the sentence to be parsed
+	 * @return the list of Estimate
 	 */
-	static List<Estimate> parseContent(Content content) {
+	public static List<Estimate> parseContent(Content content) {
 		if (content == null) {
 			return null;
 		}
@@ -67,50 +71,97 @@ class Estimate {
 		return null;
 	}
 
-	private Agent estimater;
+	private Agent estimator;
 	private Agent estimated;
 	private List<Role> roles = new ArrayList<>();
 	private List<Content> reasons = new ArrayList<>();
 
-	Estimate(Agent estimater, Agent estimated, Role... roles) {
-		this.estimater = estimater;
+	/**
+	 * Constructs an Estimate.
+	 * 
+	 * @param estimator the estimating agent
+	 * @param estimated the estimated agent
+	 * @param roles     the estimated roles
+	 */
+	public Estimate(Agent estimator, Agent estimated, Role... roles) {
+		this.estimator = estimator;
 		this.estimated = estimated;
 		for (Role r : roles) {
 			addRole(r);
 		}
 	}
 
-	Estimate(Agent estimater, Agent estimated, Content reason, Role... roles) {
-		this(estimater, estimated, roles);
+	/**
+	 * Constructs an Estimate with a reason.
+	 * 
+	 * @param estimator the estimating agent
+	 * @param estimated the estimated agent
+	 * @param reason    the reason
+	 * @param roles     the estimated roles
+	 */
+	public Estimate(Agent estimator, Agent estimated, Content reason, Role... roles) {
+		this(estimator, estimated, roles);
 		addReason(reason);
 	}
 
-	void addRole(Role role) {
+	/**
+	 * Adds an estimated role to the existings.
+	 * 
+	 * @param role the estimated role to be added
+	 */
+	public void addRole(Role role) {
 		if (!roles.contains(role)) {
 			roles.add(role);
 		}
 	}
 
-	void resetRole(Role role) {
+	/**
+	 * Sets unique estimated role.
+	 * 
+	 * @param role the estimated role
+	 */
+	public void resetRole(Role role) {
 		roles.clear();
 		roles.add(role);
 	}
 
-	void addReason(Content reason) {
+	/**
+	 * Adds a reason to the existings.
+	 * 
+	 * @param reason the reason to be added
+	 */
+	public void addReason(Content reason) {
 		if (!reasons.contains(reason)) {
 			reasons.add(reason);
 		}
 	}
 
-	boolean hasRole(Role role) {
+	/**
+	 * Returns whether or not this estimate about the role.
+	 * 
+	 * @param role the role
+	 * @return true if this estimate is about the role
+	 */
+	public boolean hasRole(Role role) {
 		return roles.contains(role);
 	}
 
-	boolean hasReason(Content reason) {
+	/**
+	 * Returns whether or not this estimate has the reason specified.
+	 * 
+	 * @param reason the reason
+	 * @return true if this estimate has the reason
+	 */
+	public boolean hasReason(Content reason) {
 		return reasons.contains(reason);
 	}
 
-	Content toContent() {
+	/**
+	 * Returns this estimate in the form of Content.
+	 * 
+	 * @return ESTIMATE if no reason, otherwise, BECAUSE
+	 */
+	public Content toContent() {
 		Content estimate = getEstimateContent();
 		if (estimate == null) {
 			return null;
@@ -119,36 +170,57 @@ class Estimate {
 		if (reason == null) {
 			return estimate;
 		}
-		return new Content(new BecauseContentBuilder(estimater, reason, estimate));
+		return new Content(new BecauseContentBuilder(estimator, reason, estimate));
 	}
 
-	Agent getEstimater() {
-		return estimater;
+	/**
+	 * Returns the agent which estimates.
+	 * 
+	 * @return the estimator
+	 */
+	public Agent getEstimator() {
+		return estimator;
 	}
 
-	Agent getEstimated() {
+	/**
+	 * Returns the estimated agent.
+	 * 
+	 * @return the estimated agent
+	 */
+	public Agent getEstimated() {
 		return estimated;
 	}
 
-	Content getEstimateContent() {
-		Content[] estimates = roles.stream().map(r -> new Content(new EstimateContentBuilder(estimater, estimated, r))).toArray(size -> new Content[size]);
+	/**
+	 * Returns the estimates about multiple roles in a form of XOR.
+	 * 
+	 * @return in a form of ESTIMATE in case of single role, otherwise, in a form of XOR omitting the third and following
+	 *         ones
+	 */
+	public Content getEstimateContent() {
+		Content[] estimates = roles.stream().map(r -> new Content(new EstimateContentBuilder(estimator, estimated, r))).toArray(size -> new Content[size]);
 		if (estimates.length == 0) {
 			return null;
 		}
 		if (estimates.length == 1) {
 			return estimates[0];
 		}
-		return new Content(new XorContentBuilder(estimater, estimates[0], estimates[1])); // 3つ目以降は無視
+		return new Content(new XorContentBuilder(estimator, estimates[0], estimates[1])); // 3つ目以降は無視
 	}
 
-	Content getReasonContent() {
+	/**
+	 * Returns the reasons of this estimate in a form of AND.
+	 * 
+	 * @return in a form of ESTIMATE in case of single reason, otherwise, in a form of AND
+	 */
+	public Content getReasonContent() {
 		if (reasons.isEmpty()) {
 			return null;
 		}
 		if (reasons.size() == 1) {
 			return reasons.get(0);
 		}
-		return new Content(new AndContentBuilder(estimater, reasons));
+		return new Content(new AndContentBuilder(estimator, reasons));
 	}
 
 	@Override

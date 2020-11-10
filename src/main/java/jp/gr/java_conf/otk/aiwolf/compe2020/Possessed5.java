@@ -1,6 +1,8 @@
 /**
  * Possessed5.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -18,7 +20,7 @@ import jp.gr.java_conf.otk.aiwolf.compe2020.common.GameInfoModifier;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * possessed for 5 agent village
+ * Possessed for 5 agent village
  * 
  * @author otsuki
  */
@@ -29,6 +31,12 @@ public class Possessed5 extends BasePlayer5 {
 	private Agent divinedHuman;
 	private Deque<GameInfo> gameInfoList = new LinkedList<>();
 
+	/**
+	 * Constructs Possessed5 with meta information.
+	 * 
+	 * @param metaInfo     meta information for possessed
+	 * @param fakeMetaInfo meta information for fake role
+	 */
 	public Possessed5(MetaInfo metaInfo, MetaInfo fakeMetaInfo) {
 		super(metaInfo);
 		this.fakeMetaInfo = fakeMetaInfo;

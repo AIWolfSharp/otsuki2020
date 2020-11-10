@@ -1,6 +1,8 @@
 /**
  * EstimateReasonMap.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -16,23 +18,29 @@ import org.aiwolf.common.data.Agent;
 import org.aiwolf.common.data.Role;
 
 /**
- * estimate and its reason of each agent
+ * A mapping between an agent and its estimate with a reason.
  * 
  * @author otsuki
  */
 @SuppressWarnings("serial")
-class EstimateReasonMap extends HashMap<Agent, Map<Agent, Estimate>> {
+public class EstimateReasonMap extends HashMap<Agent, Map<Agent, Estimate>> {
 
-	boolean put(Estimate estimate) {
+	/**
+	 * Registers an estimate.
+	 * 
+	 * @param estimate the estimate to be registered
+	 * @return true on success
+	 */
+	public boolean put(Estimate estimate) {
 		if (estimate == null) {
 			return false;
 		}
-		Agent estimater = estimate.getEstimater();
+		Agent estimator = estimate.getEstimator();
 		Agent estimated = estimate.getEstimated();
-		if (estimater == null || estimated == null) {
+		if (estimator == null || estimated == null) {
 			return false;
 		}
-		put(estimater, new HashMap<Agent, Estimate>() {
+		put(estimator, new HashMap<Agent, Estimate>() {
 			private static final long serialVersionUID = 1L;
 			{
 				put(estimated, estimate);
@@ -42,13 +50,12 @@ class EstimateReasonMap extends HashMap<Agent, Map<Agent, Estimate>> {
 	}
 
 	/**
-	 * register the utterance if it is estimate, the reason is also registered if any
+	 * Registers the estimate contained in the utterance.
 	 * 
-	 * @param content
-	 *                utterance
-	 * @return true if the registration is success
+	 * @param content the utterance
+	 * @return true on success
 	 */
-	boolean put(Content content) {
+	public boolean put(Content content) {
 		List<Estimate> estimates = Estimate.parseContent(content);
 		if (estimates == null || estimates.isEmpty()) {
 			return false;
@@ -62,38 +69,48 @@ class EstimateReasonMap extends HashMap<Agent, Map<Agent, Estimate>> {
 	}
 
 	/**
+	 * Returns the agent's estimate about the estimated agent in the form of Content.
 	 * 
-	 * @param estimater
-	 * @param estimated
-	 * @return
+	 * @param estimater the agent which does estimate
+	 * @param estimated the estimated agent
+	 * @return the estimate in the form of Content
 	 */
-	Content getContent(Agent estimater, Agent estimated) {
+	public Content getContent(Agent estimater, Agent estimated) {
 		Estimate estimate = getEstimate(estimater, estimated);
 		return estimate != null ? estimate.toContent() : null;
 	}
 
 	/**
+	 * Returns the agent's estimate about the estimated agent in the form of Estimate.
 	 * 
-	 * @param estimater
-	 * @param estimated
-	 * @return
+	 * @param estimater the agent which does estimate
+	 * @param estimated the estimated agent
+	 * @return the estimate in the form of Estimate
 	 */
-	Estimate getEstimate(Agent estimater, Agent estimated) {
+	public Estimate getEstimate(Agent estimater, Agent estimated) {
 		return get(estimater) != null ? get(estimater).get(estimated) : null;
 	}
 
 	/**
+	 * Returns the reason of the agent's estimate about the estimated agent.
 	 * 
-	 * @param estimater
-	 * @param estimated
-	 * @return
+	 * @param estimater the agent which does estimate
+	 * @param estimated the estimated agent
+	 * @return the reason in the form of Content
 	 */
-	Content getReason(Agent estimater, Agent estimated) {
+	public Content getReason(Agent estimater, Agent estimated) {
 		Content content = getContent(estimater, estimated);
 		return content != null && content.getOperator() == Operator.BECAUSE ? content.getContentList().get(0) : null;
 	}
 
-	List<Agent> getEstimated(Agent estimater, Role role) {
+	/**
+	 * Returns the agents estimated to be the role by the agent which does estimate.
+	 * 
+	 * @param estimater the agent which does estimate
+	 * @param role      the estimated role
+	 * @return the list of agents estimated to be the role
+	 */
+	public List<Agent> getEstimated(Agent estimater, Role role) {
 		if (containsKey(estimater)) {
 			return get(estimater).values().stream()
 					.filter(e -> e.hasRole(role)).map(e -> e.getEstimated()).distinct().collect(Collectors.toList());

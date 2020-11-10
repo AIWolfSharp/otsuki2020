@@ -1,6 +1,8 @@
 /**
  * OtsukiPlayer.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -15,6 +17,7 @@ import org.aiwolf.common.net.GameSetting;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
+ * Team otsuki's player.
  * 
  * @author otsuki
  *
@@ -27,6 +30,9 @@ public class OtsukiPlayer implements Player {
 
 	private Player player;
 
+	/**
+	 * Constructs an OtsukiPlayer.
+	 */
 	public OtsukiPlayer() {
 		metaInfo = new MetaInfo();
 

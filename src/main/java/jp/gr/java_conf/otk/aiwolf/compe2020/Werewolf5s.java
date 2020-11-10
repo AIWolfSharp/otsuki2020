@@ -1,6 +1,8 @@
 /**
  * Werewolf5s.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -18,7 +20,7 @@ import jp.gr.java_conf.otk.aiwolf.compe2020.common.GameInfoModifier;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * werewolf for 5 agent village (fake seer)
+ * Werewolf for 5 agent village acting as a seer.
  * 
  * @author otsuki
  */
@@ -30,6 +32,12 @@ public class Werewolf5s extends Werewolf5 {
 	private Judge fakeDivination;
 	private Deque<GameInfo> gameInfoList = new LinkedList<>();
 
+	/**
+	 * Constructs Werewolf5s with meta information.
+	 * 
+	 * @param metaInfo     meta information for werewolf
+	 * @param fakeMetaInfo meta information for fake role
+	 */
 	public Werewolf5s(MetaInfo metaInfo, MetaInfo fakeMetaInfo) {
 		super(metaInfo, fakeMetaInfo);
 		this.fakeMetaInfo = fakeMetaInfo;

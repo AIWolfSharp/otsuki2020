@@ -1,6 +1,8 @@
 /**
  * VoteReasonMap.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -20,7 +22,7 @@ import org.aiwolf.client.lib.Topic;
 import org.aiwolf.common.data.Agent;
 
 /**
- * the declared vote and its reason
+ * A mapping between agent and its declared vote with reason.
  * 
  * @author otsuki
  */
@@ -38,18 +40,21 @@ public class VoteReasonMap extends HashMap<Agent, Entry<Agent, Content>> {
 	}
 
 	/**
-	 * true if there is modification since last call of this method
+	 * Returns whether or not there is modification since last call of this method.
+	 * 
+	 * @return true if there is any modification
 	 */
 	public boolean isChanged() {
 		return isChanged && !(isChanged = false);
 	}
 
 	/**
+	 * Associates vote target with voter, and reason with vote if any.
 	 * 
-	 * @param voter
-	 * @param voted
-	 * @param reason
-	 * @return
+	 * @param voter  the agent declaring voting will
+	 * @param voted  the agent voted by voter
+	 * @param reason the reason for voting
+	 * @return true on success
 	 */
 	public boolean put(Agent voter, Agent voted, Content reason) {
 		if (voter == null) {
@@ -70,30 +75,32 @@ public class VoteReasonMap extends HashMap<Agent, Entry<Agent, Content>> {
 	}
 
 	/**
+	 * Associates vote target with voter.
 	 * 
-	 * @param voter
-	 * @param voted
-	 * @return
+	 * @param voter the agent declaring voting will
+	 * @param voted the agent voted by voter
+	 * @return true on success
 	 */
 	public boolean put(Agent voter, Agent voted) {
 		return put(voter, voted, null);
 	}
 
 	/**
+	 * Deletes the voter's association.
 	 * 
-	 * @param voter
-	 * @param voted
-	 * @return
+	 * @param voter the voter
+	 * @return true on success
 	 */
 	public boolean cancel(Agent voter) {
 		return put(voter, null, null);
 	}
 
 	/**
+	 * Associates the utterance of vote with the reason.
 	 * 
-	 * @param vote
-	 * @param reason
-	 * @return
+	 * @param vote   the utterance of vote
+	 * @param reason the reason of the vote
+	 * @return true on success
 	 */
 	public boolean put(Content vote, Content reason) {
 		if (vote.getTopic() == Topic.VOTE) {
@@ -105,9 +112,10 @@ public class VoteReasonMap extends HashMap<Agent, Entry<Agent, Content>> {
 	}
 
 	/**
+	 * Registers the utterance concerning vote, and associates the reason with the vote if any.
 	 * 
-	 * @param content
-	 * @return
+	 * @param content the utterance concerning vote
+	 * @return true on success
 	 */
 	public boolean put(Content content) {
 		if (content.getTopic() == Topic.VOTE) {
@@ -119,25 +127,29 @@ public class VoteReasonMap extends HashMap<Agent, Entry<Agent, Content>> {
 	}
 
 	/**
+	 * Returns the number of votes the voted agent got.
 	 * 
-	 * @param voted
-	 * @return
+	 * @param voted the voted agent
+	 * @return the number of votes
 	 */
 	public int getVoteCount(Agent voted) {
 		return voteCountMap.getOrDefault(voted, 0);
 	}
 
 	/**
+	 * Returns the total number of votes.
 	 * 
-	 * @return
+	 * @return the total number of votes
 	 */
 	public int getVoteCount() {
 		return voteCountMap.keySet().stream().mapToInt(a -> getVoteCount(a)).sum();
 	}
 
 	/**
+	 * Returns a list of agents sorted in descending order of vote count.
 	 * 
-	 * @return
+	 * @param excludes a list of agents to exclude from the list to be returned
+	 * @return a list of agents
 	 */
 	public List<Agent> getOrderedList(List<Agent> excludes) {
 		return voteCountMap.keySet().stream().filter(a -> !excludes.contains(a))
@@ -145,37 +157,41 @@ public class VoteReasonMap extends HashMap<Agent, Entry<Agent, Content>> {
 	}
 
 	/**
+	 * Returns a list of agents sorted in descending order of vote count.
 	 * 
-	 * @return
+	 * @param excludes agents to exclude from the list to be returned
+	 * @return a list of agents
 	 */
 	public List<Agent> getOrderedList(Agent... excludes) {
 		return getOrderedList(Arrays.asList(excludes));
 	}
 
 	/**
+	 * Returns the agent voted by the voter.
 	 * 
-	 * @param voter
-	 * @return
+	 * @param voter the voter
+	 * @return the voted agent
 	 */
 	public Agent getTarget(Agent voter) {
 		return containsKey(voter) ? get(voter).getKey() : null;
 	}
 
 	/**
+	 * Returns the reason of the voter's vote.
 	 * 
-	 * @param voter
-	 * @param voted
-	 * @return
+	 * @param voter the voter
+	 * @return the reason of the voter's vote
 	 */
 	public Content getReason(Agent voter) {
 		return containsKey(voter) ? get(voter).getValue() : null;
 	}
 
 	/**
+	 * Returns the reason why the voter votes for the voted.
 	 * 
-	 * @param voter
-	 * @param voted
-	 * @return
+	 * @param voter the voter
+	 * @param voted the voted agent
+	 * @return the reason
 	 */
 	public Content getReason(Agent voter, Agent voted) {
 		return getTarget(voter) == voted ? getReason(voted) : null;
@@ -188,9 +204,10 @@ public class VoteReasonMap extends HashMap<Agent, Entry<Agent, Content>> {
 	}
 
 	/**
+	 * Returns the agent which gets the maximum number of votes.
 	 * 
-	 * @param excludes
-	 * @return
+	 * @param excludes agents to exclude from result
+	 * @return the top winning agent
 	 */
 	public Agent getTop(Agent... excludes) {
 		return voteCountMap.keySet().stream().filter(a -> !Arrays.asList(excludes).contains(a))
@@ -198,9 +215,9 @@ public class VoteReasonMap extends HashMap<Agent, Entry<Agent, Content>> {
 	}
 
 	/**
+	 * Returns a list of agents that get the maximum number of votes.
 	 * 
-	 * @param voteMap
-	 * @return
+	 * @return a list of agents
 	 */
 	public List<Agent> getWinners() {
 		List<Agent> agents = values().stream().map(e -> e.getKey()).distinct().collect(Collectors.toList());
@@ -209,9 +226,10 @@ public class VoteReasonMap extends HashMap<Agent, Entry<Agent, Content>> {
 	}
 
 	/**
+	 * Return whether or not the agent is a winner.
 	 * 
-	 * @param agent
-	 * @return
+	 * @param agent the agent
+	 * @return true if the agent is a winner
 	 */
 	public boolean isWinner(Agent agent) {
 		return getWinners().contains(agent);

@@ -1,6 +1,8 @@
 /**
  * Seer.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -18,7 +20,7 @@ import org.aiwolf.common.net.GameSetting;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * seer
+ * Seer
  * 
  * @author otsuki
  */
@@ -28,6 +30,11 @@ public class Seer extends Villager {
 	private boolean hasCo;
 	private int myDivinationHead;
 
+	/**
+	 * Constructs Seer with meta information.
+	 * 
+	 * @param metaInfo meta information
+	 */
 	public Seer(MetaInfo metaInfo) {
 		super(metaInfo);
 	}

@@ -1,6 +1,8 @@
 /**
  * BasePlayer5.java
- * Copyright (c) 2020 OTSUKI Takashi
+ * 
+ * Copyright 2020 OTSUKI Takashi
+ * SPDX-License-Identifier: Apache-2.0
  */
 package jp.gr.java_conf.otk.aiwolf.compe2020;
 
@@ -20,7 +22,7 @@ import jp.gr.java_conf.otk.aiwolf.compe2020.common.GameInfoModifier;
 import jp.gr.java_conf.otk.aiwolf.compe2020.common.MetaInfo;
 
 /**
- * base class for 5 agent village
+ * Base class for all players in 5 agent village.
  * 
  * @author otsuki
  */
@@ -29,6 +31,11 @@ public class BasePlayer5 extends BasePlayer {
 	private Map<Agent, Role> forwardEstimateMap = new HashMap<>();
 	private Map<Agent, Double> rateMap = new HashMap<>();
 
+	/**
+	 * Constructs BasePlayer5 with meta information.
+	 * 
+	 * @param metaInfo meta information
+	 */
 	public BasePlayer5(MetaInfo metaInfo) {
 		super(metaInfo);
 	}
@@ -43,18 +50,27 @@ public class BasePlayer5 extends BasePlayer {
 		getOthers().forEach(a -> forwardEstimateMap.put(a, Role.ANY));
 	}
 
+	/**
+	 * Sets the mapping between the agent and its role estimated by this player.
+	 * 
+	 * @param map
+	 */
 	protected void setForwardEstimateMap(Map<Agent, Role> map) {
 		forwardEstimateMap = map;
 	}
 
+	/**
+	 * Updates EstimateMap for all roles and all agents.
+	 */
 	protected void updateEstimateMap() {
 		updateEstimateMap(null, null);
 	}
 
 	/**
+	 * Updates EstimateMap excluding the case that some agents' specified role.
 	 * 
-	 * @param excludedRole
-	 * @param excludedAgents
+	 * @param excludedRole   the role to be excluded
+	 * @param excludedAgents the agents to be excluded
 	 */
 	protected void updateEstimateMap(Role excludedRole, List<Agent> excludedAgents) {
 		Map<Role, List<Agent>> candidatesMap = new HashMap<>();
@@ -137,10 +153,10 @@ public class BasePlayer5 extends BasePlayer {
 	}
 
 	/**
-	 * estimated role of the agent
+	 * Returns the role of the agent estimated by this player.
 	 * 
-	 * @param agent
-	 * @return
+	 * @param the agent
+	 * @return the estimated role
 	 */
 	protected Role getEstimateOf(Agent agent) {
 		updateEstimateMap();
@@ -148,25 +164,46 @@ public class BasePlayer5 extends BasePlayer {
 	}
 
 	/**
-	 * the list agents estimated to be role
+	 * Returns the list of agents estimated to be the role.
 	 * 
-	 * @param role
-	 * @return
+	 * @param role the role
+	 * @return the list of agents
 	 */
 	protected List<Agent> getEstimateOf(Role role) {
 		getEstimateNotHaving(role);
 		return forwardEstimateMap.keySet().stream().filter(a -> forwardEstimateMap.get(a) == role).collect(Collectors.toList());
 	}
 
+	/**
+	 * Returns the list of agents estimated to be the role, excluding specified agents.
+	 * 
+	 * @param role           the role
+	 * @param excludedAgents the agents to be excluded from the result
+	 * @return the list of agents
+	 */
 	protected List<Agent> getEstimateNotHaving(Role role, Agent... excludedAgents) {
 		updateEstimateMap(role, Arrays.asList(excludedAgents));
 		return forwardEstimateMap.keySet().stream().filter(a -> forwardEstimateMap.get(a) == role).collect(Collectors.toList());
 	}
 
+	/**
+	 * Returns the list of limited agents estimated to be the role.
+	 * 
+	 * @param role          the role
+	 * @param limitedAgents the limited agents
+	 * @return
+	 */
 	protected List<Agent> getEstimateLimitting(Role role, Agent... limitedAgents) {
 		return getEstimateLimitting(role, Arrays.asList(limitedAgents));
 	}
 
+	/**
+	 * Returns the list of limited agents estimated to be the role.
+	 * 
+	 * @param role          the role
+	 * @param limitedAgents the list of limited agents
+	 * @return
+	 */
 	protected List<Agent> getEstimateLimitting(Role role, List<Agent> limitedAgents) {
 		List<Agent> excludedAgents = getOthers();
 		excludedAgents.removeAll(limitedAgents);
@@ -175,21 +212,22 @@ public class BasePlayer5 extends BasePlayer {
 	}
 
 	/**
-	 * winning rate of the agent
+	 * Returns the winning rate of the agent.
 	 * 
-	 * @param agent
-	 * @return
+	 * @param agent the agent
+	 * @return the winning rate between 0.0 and 1.0
 	 */
 	protected double getRateOf(Agent agent) {
 		return rateMap.get(agent);
 	}
 
 	/**
+	 * Returns the fake game information containing this player's fake role and fake divination.
 	 * 
-	 * @param gameInfo
-	 * @param fakeRole       no modification if null specified
-	 * @param fakeDivination no modification if null specified
-	 * @return
+	 * @param gameInfo       the original game information
+	 * @param fakeRole       this player's fake role, null if no fake
+	 * @param fakeDivination this player's fake divination, null if no fake
+	 * @return the fake game informaion
 	 */
 	protected GameInfo getFakeGameInfo(GameInfo gameInfo, Role fakeRole, Judge fakeDivination) {
 		return new GameInfoModifier(gameInfo).setFakeRole(fakeRole).setDivineResult(fakeDivination).toGameInfo();
